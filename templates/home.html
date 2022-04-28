@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="shadow card">
+            <div class="card-body">
+                <div class="card-title">
+                     <h2>Enter task</h2>
+                </div>
+
+            </div>
+        </div>
+
+        <form method="post" class="p-3 shadow">
+            {% csrf_token %}
+            <div class="form-group>">
+                <input type="text" name="title" placeholder="Enter the title" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="date" name="date" placeholder="Enter the date" class="form-control">
+            </div>
+            <input type="submit" class="btn btn-success">
+        </form>
+
+    </div>
+    <div class="col-md-6">
+         <div class="shadow card">
+            <div class="card-body">
+                 <div class="card-title">
+                     <h2>Your Tasks</h2>
+                 </div>
+            </div>
+         </div>
+
+{% for i in obj %}
+
+        <div class="shadow card">
+    <div class="card-body">
+        <div class="card-title">
+            {% if i.complete %}
+            <p>your {{i.title}} task completed</p>
+            <p><a href="{% url 'delete' i.id %}" class="btn btn-danger">delete</a></p>
+            {% else %}
+            <p>{{i.title}}</p>
+            <p>{{i.day}}</p>
+            <p><a href="{% url 'delete' i.id %}" class="btn btn-danger">delete</a>
+             <a href="{% url 'complete' i.id %}" class="btn btn-warning">complete</a>
+                 <a href="{% url 'update' i.id %}" class="btn btn-secondary">update</a>
+            </p>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+         <br>
+
+         {% endfor %}
+</div>
+
+</div>
+
+
+
+
+{% endblock %}
+
